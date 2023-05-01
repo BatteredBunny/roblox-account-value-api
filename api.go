@@ -81,6 +81,7 @@ func (app *Application) limitedAccountValueAPI(c *gin.Context) {
 	for {
 		body, err := collectiblesAPI(userid, nextCursor)
 		if err != nil {
+			app.logWarning.Println(err)
 			c.AbortWithStatus(http.StatusInternalServerError)
 			return
 		}
@@ -143,6 +144,7 @@ func (app *Application) canViewInventoryAPI(c *gin.Context) {
 
 	canView, err := canViewInventory(userid)
 	if err != nil {
+		app.logWarning.Println(err)
 		c.AbortWithStatus(http.StatusInternalServerError)
 		return
 	}
