@@ -1,2 +1,2 @@
 port = "8080"
-robux_to_euro_rate = 60
+robux_per_euro = 60

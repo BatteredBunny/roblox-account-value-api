@@ -55,8 +55,10 @@ func addRouter(uninitializedApp *uninitializedApplication) (app *Application) {
 	app.Router = gin.Default()
 
 	api := app.Router.Group("/api")
-	api.GET("/limited-account-value", app.limitedAccountValueAPI)
+	api.GET("/collectibles-account-value", app.collectiblesAccountValueAPI)
 	api.GET("/can-view-inventory", app.canViewInventoryAPI)
+	api.GET("/profile-info", app.profileInfoAPI)
+	api.GET("/exchange-rate", app.exchangeRateAPI)
 	api.Use(app.ratelimitMiddleware())
 
 	app.Router.GET("/", func(c *gin.Context) {

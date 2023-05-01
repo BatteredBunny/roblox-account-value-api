@@ -17,8 +17,8 @@ type Application struct {
 }
 
 type Config struct {
-	RobuxToEuroRate uint64 `toml:"robux_to_euro_rate"`
-	Port            string `toml:"port"`
+	RobuxPerEuro uint64 `toml:"robux_per_euro"`
+	Port         string `toml:"port"`
 }
 
 func (app *Application) run() {
