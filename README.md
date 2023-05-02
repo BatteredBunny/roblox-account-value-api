@@ -7,7 +7,13 @@
 GET https://roblox-account-value-api.sly.ee/api/collectibles-account-value?userid=XXX
 {
 	"total_robux": 0,
-	"in_euro": 0
+	"in_euro": 0,
+	"collectibles": [
+	    "name": "Collectibles",
+	    "price": 0,
+	    "id": 0,
+	    "serialnumber": 0,
+	]
 }
 ```
 
@@ -22,6 +28,7 @@ true
 GET https://roblox-account-value-api.sly.ee/api/profile-info?userid=XXX
 {
     "username": "username",
+    "displayname": "displayname",
     "avatar": "https://tr.rbxcdn.com/avatar"
 }
 ```
