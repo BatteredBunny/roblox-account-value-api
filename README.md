@@ -1,6 +1,6 @@
 <h1 align="center">Roblox account value api</h1>
 
-# API 
+# API
 
 ## Account collectibles value API
 ```
@@ -13,6 +13,7 @@ GET https://roblox-account-value-api.sly.ee/api/collectibles-account-value?useri
 	    "price": 0,
 	    "id": 0,
 	    "serialnumber": 0,
+		"thumbnail": "https://tr.rbxcdn.com/"
 	]
 }
 ```

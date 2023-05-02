@@ -6,6 +6,7 @@ import (
 	"io"
 	"net/http"
 	"net/url"
+	"strings"
 	"time"
 )
 
@@ -49,6 +50,39 @@ func collectiblesAPI(userid uint64, cursor string) (body *collectiblesAPIRespons
 	}
 
 	err = json.Unmarshal(rawBody, &body)
+
+	return
+}
+
+// assetThumbnailAPI is a wrapper for https://thumbnails.roblox.com/v1/assets
+func assetThumbnailAPI(rawIDs []uint64) (urls []string, err error) {
+	ids := strings.Trim(strings.Join(strings.Fields(fmt.Sprint(rawIDs)), ","), "[]")
+
+	resp, err := http.Get(fmt.Sprintf("https://thumbnails.roblox.com/v1/assets?assetIds=%s&returnPolicy=PlaceHolder&size=140x140&format=Png&isCircular=false", ids))
+	if err != nil {
+		return nil, err
+	}
+
+	rawBody, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return nil, err
+	}
+
+	var body struct {
+		Data []struct {
+			TargetId int    `json:"targetId"`
+			State    string `json:"state"`
+			ImageUrl string `json:"imageUrl"`
+		} `json:"data"`
+	}
+
+	if err = json.Unmarshal(rawBody, &body); err != nil {
+		return
+	}
+
+	for _, data := range body.Data {
+		urls = append(urls, data.ImageUrl)
+	}
 
 	return
 }

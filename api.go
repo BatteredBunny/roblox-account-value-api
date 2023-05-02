@@ -2,9 +2,10 @@ package main
 
 import (
 	"errors"
-	"github.com/gin-gonic/gin"
 	"net/http"
 	"strconv"
+
+	"github.com/gin-gonic/gin"
 )
 
 var ErrorNoUserID = errors.New("no userid provided")
@@ -15,6 +16,7 @@ func (app *Application) handleCollectiblesAccountValue(c *gin.Context) {
 		Price        uint64  `json:"price"`
 		ID           uint64  `json:"id"`
 		SerialNumber *uint64 `json:"serialnumber,omitempty"`
+		Thumbnail    string  `json:"thumbnail"`
 	}
 	type handleCollectiblesAccountValueResponse struct {
 		TotalRobux   uint64                                              `json:"total_robux"`
@@ -43,13 +45,26 @@ func (app *Application) handleCollectiblesAccountValue(c *gin.Context) {
 		return
 	}
 
-	var collectibles []handleCollectiblesAccountValueResponseCollectible
+	var collectibleIDs []uint64
 	for _, collectible := range rawCollectibles {
+		collectibleIDs = append(collectibleIDs, collectible.AssetId)
+	}
+
+	collectibleThumbnails, err := assetThumbnailAPI(collectibleIDs)
+	if err != nil {
+		app.logWarning.Println(err)
+		c.AbortWithStatus(http.StatusInternalServerError)
+		return
+	}
+
+	var collectibles []handleCollectiblesAccountValueResponseCollectible
+	for i, collectible := range rawCollectibles {
 		collectibles = append(collectibles, handleCollectiblesAccountValueResponseCollectible{
 			Name:         collectible.Name,
 			Price:        collectible.RecentAveragePrice,
 			ID:           collectible.AssetId,
 			SerialNumber: collectible.SerialNumber,
+			Thumbnail:    collectibleThumbnails[i],
 		})
 	}
 
