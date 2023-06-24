@@ -1,5 +1,11 @@
 <h1 align="center">Roblox account value api</h1>
 
+
+# Build docker image
+```
+nix run github:ayes-web/roblox-account-value-api#docker.copyToDockerDaemon
+```
+
 # API
 
 ## Account collectibles value API
