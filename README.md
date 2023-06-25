@@ -1,13 +1,25 @@
 <h1 align="center">Roblox account value api</h1>
 
+## Simple companion API for the [web app](https://roblox-account-value.sly.ee/)
 
-# Build docker image
+This is needed as browser itself can't do many of the requests to roblox so a proxy of sorts is needed.
+
+# Recommended usage
+The recommended way to use this is to use the docker image, check the [docker-compose.yml](https://github.com/ayes-web/roblox-account-value-api/blob/master/docker-compose.yml) in the repo :)
+
+# Building docker image with nix
 ```
 nix run github:ayes-web/roblox-account-value-api#docker.copyToDockerDaemon
 ```
 
-# API
+# Building standalone program with nix
+```
+nix build github:ayes-web/roblox-account-value-api
+```
 
+
+# API
+Handy info for utilizing the api yourself
 ## Account collectibles value API
 ```
 GET https://roblox-account-value-api.sly.ee/api/collectibles-account-value?userid=XXX
@@ -46,15 +58,4 @@ GET https://roblox-account-value-api.sly.ee/api/exchange-rate
 {
     "robux_per_euro": 60
 }
-```
-
-## 
-# Build program
-```
-nix build .
-```
-
-# Build docker container
-```
-nix run .#docker.copyToDockerDaemon
 ```
