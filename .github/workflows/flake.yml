@@ -29,7 +29,7 @@ jobs:
       id: runcmd
       with:
         arch: arm64
-        distro: ubuntu-latest
+        distro: ubuntu23.04
 
         # Not required, but speeds up builds by storing container images in
         # a GitHub package registry.
