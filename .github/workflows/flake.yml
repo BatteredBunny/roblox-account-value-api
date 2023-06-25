@@ -20,5 +20,4 @@ jobs:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
     - name: build and push container
-      run: nix run .#docker.copyToDockerDaemon
-    - run: docker push ghcr.io/ayes-web/roblox-account-value-api:latest
+      run: nix run .#docker.copyToRegistry
