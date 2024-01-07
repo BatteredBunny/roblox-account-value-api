@@ -1,4 +1,4 @@
-module github.com/ayes-web/roblox-account-value-api
+module github.com/BatteredBunny/roblox-account-value-api
 
 go 1.21
 

@@ -3,7 +3,7 @@ version: '3.8'
 
 services:
   roblox-account-value-api:
-    image: ghcr.io/ayes-web/roblox-account-value-api:latest
+    image: ghcr.io/batteredbunny/roblox-account-value-api:latest
     container_name: roblox_account_value_api
     ports:
       - 8080:80

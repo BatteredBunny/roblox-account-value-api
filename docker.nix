@@ -10,7 +10,7 @@
   '';
 in
   nix2container.packages.${pkgs.system}.nix2container.buildImage {
-    name = "ghcr.io/ayes-web/roblox-account-value-api";
+    name = "ghcr.io/batteredbunny/roblox-account-value-api";
     tag = "latest";
 
     copyToRoot = pkgs.cacert;
