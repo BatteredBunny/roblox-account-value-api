@@ -11,7 +11,7 @@ buildGoModule rec {
   ];
 
   meta = {
-    homepage = "https://github.com/ayes-web/roblox-account-value-api";
+    homepage = "https://github.com/BatteredBunny/roblox-account-value-api";
     description = "Webapp that calculates account value in robux and euro";
     mainProgram = name;
   };

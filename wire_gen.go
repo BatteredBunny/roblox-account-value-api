@@ -83,7 +83,7 @@ func addRouter(uninitializedApp *uninitializedApplication) (app *Application) {
 	api.Use(app.ratelimitMiddleware())
 
 	app.Router.GET("/", func(c *gin.Context) {
-		c.Redirect(http.StatusTemporaryRedirect, "https://github.com/ayes-web/roblox-account-value-api")
+		c.Redirect(http.StatusTemporaryRedirect, "https://github.com/BatteredBunny/roblox-account-value-api")
 	})
 
 	return

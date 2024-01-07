@@ -5,16 +5,16 @@
 This is needed as browser itself can't do many of the requests to roblox so a proxy of sorts is needed.
 
 # Recommended usage
-The recommended way to use this is to use the docker image, check the [docker-compose.yml](https://github.com/ayes-web/roblox-account-value-api/blob/master/docker-compose.yml) in the repo :)
+The recommended way to use this is to use the docker image, check the [docker-compose.yml](https://github.com/BatteredBunny/roblox-account-value-api/blob/master/docker-compose.yml) in the repo :)
 
 # Building docker image with nix
 ```
-nix run github:ayes-web/roblox-account-value-api#docker.copyToDockerDaemon
+nix run github:BatteredBunny/roblox-account-value-api#docker.copyToDockerDaemon
 ```
 
 # Building standalone program with nix
 ```
-nix build github:ayes-web/roblox-account-value-api
+nix build github:BatteredBunny/roblox-account-value-api
 ```
 
 

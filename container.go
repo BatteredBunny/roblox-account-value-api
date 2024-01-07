@@ -4,15 +4,16 @@ package main
 
 import (
 	"flag"
+	"log"
+	"net/http"
+	"os"
+	"time"
+
 	"github.com/BurntSushi/toml"
 	"github.com/didip/tollbooth/v7"
 	"github.com/didip/tollbooth/v7/limiter"
 	"github.com/gin-gonic/gin"
 	"github.com/google/wire"
-	"log"
-	"net/http"
-	"os"
-	"time"
 )
 
 func setupLogging() *Logger {
@@ -62,7 +63,7 @@ func addRouter(uninitializedApp *uninitializedApplication) (app *Application) {
 	api.Use(app.ratelimitMiddleware())
 
 	app.Router.GET("/", func(c *gin.Context) {
-		c.Redirect(http.StatusTemporaryRedirect, "https://github.com/ayes-web/roblox-account-value-api")
+		c.Redirect(http.StatusTemporaryRedirect, "https://github.com/BatteredBunny/roblox-account-value-api")
 	})
 
 	return

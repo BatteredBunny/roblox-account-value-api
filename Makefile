@@ -6,4 +6,4 @@ docker:
 	nix run .#docker.copyToDockerDaemon
 
 docker-push: docker
-	docker push ghcr.io/ayes-web/roblox-account-value-api:latest
+	docker push ghcr.io/batteredbunny/roblox-account-value-api:latest
