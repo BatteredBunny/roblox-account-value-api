@@ -6,11 +6,12 @@
   };
 
   outputs = {
+    self,
     nixpkgs,
     flake-utils,
     nix2container,
     ...
-  }:
+  } @ inputs:
     flake-utils.lib.eachDefaultSystem (
       system: let
         pkgs = import nixpkgs {
@@ -24,6 +25,8 @@
           else pkgs.pkgsCross."${pkgs.stdenv.hostPlatform.uname.processor}-multiplatform".callPackage;
       in
         with pkgs; {
+          nixosModules.default = import ./module.nix inputs;
+
           devShells.default = mkShell {
             buildInputs = [
               gnumake
