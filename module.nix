@@ -1,22 +1,21 @@
-inputs: {
-  pkgs,
-  config ? pkgs.config,
-  lib ? pkgs.lib,
-  system,
-  self,
-  ...
-}: let
+{ pkgs
+, config ? pkgs.config
+, lib ? pkgs.lib
+, ...
+}:
+let
   cfg = config.services.roblox-account-value-api;
 
-  toml = pkgs.formats.toml {};
+  toml = pkgs.formats.toml { };
   tomlSetting = toml.generate "config.toml" cfg.settings;
-in {
+in
+{
   options.services.roblox-account-value-api = {
     enable = lib.mkEnableOption "roblox-account-value-api";
 
     package = lib.mkOption {
       description = "package to use";
-      default = inputs.self.packages.${system}.default;
+      default = pkgs.callPackage ./build.nix { };
     };
 
     settings = {
@@ -41,7 +40,7 @@ in {
         DynamicUser = true;
         ProtectSystem = "full";
         ProtectHome = "yes";
-        DeviceAllow = [""];
+        DeviceAllow = [ "" ];
         LockPersonality = true;
         MemoryDenyWriteExecute = true;
         PrivateDevices = true;
@@ -60,7 +59,7 @@ in {
         ExecStart = "${lib.getExe cfg.package} -c=${tomlSetting}";
         Restart = "always";
       };
-      wantedBy = ["default.target"];
+      wantedBy = [ "default.target" ];
     };
   };
 }

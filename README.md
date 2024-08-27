@@ -23,7 +23,7 @@ inputs = {
 ```nix
 # configuration.nix
 imports = [
-    inputs.roblox-account-value-api.nixosModules.${builtins.currentSystem}.default
+	inputs.roblox-account-value-api.nixosModules.default
 ];
 
 services.roblox-account-value-api = {
