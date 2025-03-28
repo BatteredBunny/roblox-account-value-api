@@ -28,9 +28,9 @@ imports = [
 
 services.roblox-account-value-api = {
     enable = true;
-	settings.port = 8080;
+    settings.port = 8080;
 
-	# Optional parameters
+    # Optional parameters
     package = inputs.roblox-account-value-api.packages.${builtins.currentSystem}.default;
     settings.robux_per_euro = 60;
 };
