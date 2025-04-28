@@ -1,11 +1,11 @@
-{ buildGoModule, stdenv }:
+{ buildGoModule, stdenv, lib }:
 buildGoModule rec {
   src = ./.;
 
   name = "roblox-account-value-api";
   vendorHash = if stdenv.hostPlatform.isDarwin
-               then "sha256-IqyWj5oZ+yIsJ3DHQGneyQiuXgRxuV9Dx7W8SKpJdQs="
-               else "sha256-nXQf45F/EcUcXYMDJRztYNvr8lkDoBHuOwEx88orD6U=";
+               then "sha256-A2BgXQsJ1njVsYtw86KUu4YIpiTspX7SqeZYXmFSWps="
+               else lib.fakeHash;
 
   ldflags = [
     "-s"

@@ -1,44 +1,56 @@
 {
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    flake-utils.url = "github:numtide/flake-utils";
     nix2container.url = "github:nlewo/nix2container";
   };
 
   outputs =
     { self
     , nixpkgs
-    , flake-utils
     , nix2container
     , ...
-    } @ inputs: {
+    }:
+    let
+      inherit (nixpkgs) lib;
+
+      systems = lib.systems.flakeExposed;
+
+      forAllSystems = lib.genAttrs systems;
+
+      nixpkgsFor = forAllSystems (system: import nixpkgs {
+        inherit system;
+      });
+    in
+    {
       overlays.default = final: prev: {
-        roblox-account-value-api = self.packages.default.${final.system};
+        roblox-account-value-api = self.packages.${final.stdenv.system}.roblox-account-value-api;
       };
 
       nixosModules.default = import ./module.nix;
-    }
-    //
-    (flake-utils.lib.eachDefaultSystem (
-      system:
-      let
-        pkgs = import nixpkgs {
-          inherit system;
-        };
-      in
-      with pkgs; {
-        devShells.default = mkShell {
-          buildInputs = [
-            gnumake
-            wire
-            go
-          ];
-        };
 
-        packages = {
-          default = callPackage ./build.nix { };
-          docker = callPackage ./docker.nix { inherit nix2container; };
-        };
-      }
-    ));
+      devShells = forAllSystems (system:
+        let
+          pkgs = nixpkgsFor.${system};
+        in
+        {
+          default = pkgs.mkShell {
+            buildInputs = with pkgs; [
+              gnumake
+              wire
+              go
+            ];
+          };
+        });
+
+      packages = forAllSystems (system:
+        let
+          pkgs = nixpkgsFor.${system};
+        in
+        rec {
+          roblox-account-value-api = default;
+          default = pkgs.callPackage ./build.nix { };
+          docker = pkgs.callPackage ./docker.nix { inherit nix2container; };
+        }
+      );
+    };
 }
