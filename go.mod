@@ -4,7 +4,7 @@ go 1.24.4
 
 require (
 	github.com/BurntSushi/toml v1.5.0
-	github.com/didip/tollbooth/v7 v7.0.2
+	github.com/didip/tollbooth/v8 v8.0.1
 	github.com/gin-gonic/gin v1.10.0
 	github.com/google/wire v0.6.0
 )

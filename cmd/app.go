@@ -4,7 +4,7 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/didip/tollbooth/v7/limiter"
+	"github.com/didip/tollbooth/v8/limiter"
 	"github.com/gin-gonic/gin"
 )
 
@@ -17,8 +17,9 @@ type Application struct {
 }
 
 type Config struct {
-	RobuxPerEuro uint64 `toml:"robux_per_euro"`
-	Port         string `toml:"port"`
+	RobuxPerEuro       uint64 `toml:"robux_per_euro"`
+	Port               string `toml:"port"`
+	BehindReverseProxy bool   `toml:"behindReverseProxy"`
 }
 
 func (app *Application) Run() {

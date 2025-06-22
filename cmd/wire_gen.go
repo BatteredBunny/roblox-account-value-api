@@ -9,8 +9,8 @@ package cmd
 import (
 	"flag"
 	"github.com/BurntSushi/toml"
-	"github.com/didip/tollbooth/v7"
-	"github.com/didip/tollbooth/v7/limiter"
+	"github.com/didip/tollbooth/v8"
+	"github.com/didip/tollbooth/v8/limiter"
 	"github.com/gin-gonic/gin"
 	"log"
 	"net/http"
@@ -23,7 +23,7 @@ import (
 func InitializeApplication() *Application {
 	logger := setupLogging()
 	config := initializeConfig(logger)
-	limiter := setupRatelimiting()
+	limiter := setupRatelimiting(config)
 	cmdUninitializedApplication := &uninitializedApplication{
 		Logger:      logger,
 		config:      config,
@@ -62,9 +62,20 @@ func initializeConfig(l *Logger) (c Config) {
 	return
 }
 
-func setupRatelimiting() *limiter.Limiter {
+func setupRatelimiting(c Config) *limiter.Limiter {
 	rateLimiter := tollbooth.NewLimiter(2, &limiter.ExpirableOptions{DefaultExpirationTTL: time.Hour})
-	rateLimiter.SetIPLookups([]string{"X-Forwarded-For", "RemoteAddr", "X-Real-IP"})
+
+	if c.BehindReverseProxy {
+		rateLimiter.SetIPLookup(limiter.IPLookup{
+			Name:           "X-Forwarded-For",
+			IndexFromRight: 0,
+		})
+	} else {
+		rateLimiter.SetIPLookup(limiter.IPLookup{
+			Name:           "RemoteAddr",
+			IndexFromRight: 0,
+		})
+	}
 
 	return rateLimiter
 }
@@ -72,7 +83,6 @@ func setupRatelimiting() *limiter.Limiter {
 func addRouter(uninitializedApp *uninitializedApplication) (app *Application) {
 	app = (*Application)(uninitializedApp)
 	app.logInfo.Println("Setting up router")
-	gin.SetMode(gin.ReleaseMode)
 	app.Router = gin.Default()
 
 	api := app.Router.Group("/api")

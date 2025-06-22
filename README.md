@@ -26,6 +26,7 @@ services.roblox-account-value-api = {
     # Optional parameters
     package = inputs.roblox-account-value-api.packages.${builtins.currentSystem}.default;
     settings.robux_per_euro = 60;
+    settings.behindReverseProxy = false;
 };
 ```
 

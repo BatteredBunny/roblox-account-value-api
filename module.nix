@@ -25,6 +25,8 @@ in
         description = "port to run http api on";
       };
 
+      behindReverseProxy = lib.mkEnableOption "Enable if setting up the service behind a reverse proxy" // { default = false; };
+
       robux_per_euro = lib.mkOption {
         type = lib.types.int;
         description = "configure the conversion rate of robux to euro";
@@ -59,6 +61,8 @@ in
         ExecStart = "${lib.getExe cfg.package} -c=${tomlSetting}";
         Restart = "always";
       };
+
+      environment.GIN_MODE = "release";
       wantedBy = [ "default.target" ];
     };
   };
