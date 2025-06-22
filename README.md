@@ -4,13 +4,6 @@
 
 This is needed as browser itself can't do many of the requests to roblox so a proxy of sorts is needed.
 
-# Recommended usage
-The recommended way to use this is to use the nixos module, though there is a docker image with docker-compose.yml as well.
-
-# Building docker image with nix
-```
-nix run github:BatteredBunny/roblox-account-value-api#docker.copyToDockerDaemon
-```
 
 # Running as service on nixos
 ```nix

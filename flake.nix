@@ -1,13 +1,11 @@
 {
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nix2container.url = "github:nlewo/nix2container";
   };
 
   outputs =
     { self
     , nixpkgs
-    , nix2container
     , ...
     }:
     let
@@ -49,7 +47,6 @@
         rec {
           roblox-account-value-api = default;
           default = pkgs.callPackage ./build.nix { };
-          docker = pkgs.callPackage ./docker.nix { inherit nix2container; };
         }
       );
     };

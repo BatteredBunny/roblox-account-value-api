@@ -24,12 +24,12 @@ func InitializeApplication() *Application {
 	logger := setupLogging()
 	config := initializeConfig(logger)
 	limiter := setupRatelimiting()
-	mainUninitializedApplication := &uninitializedApplication{
+	cmdUninitializedApplication := &uninitializedApplication{
 		Logger:      logger,
 		config:      config,
 		RateLimiter: limiter,
 	}
-	application := addRouter(mainUninitializedApplication)
+	application := addRouter(cmdUninitializedApplication)
 	return application
 }
 
