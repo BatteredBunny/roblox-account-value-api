@@ -1,4 +1,4 @@
-package main
+package cmd
 
 func getAllCollectibles(userid uint64) (collectibles []collectiblesAPIResponseData, err error) {
 	var nextCursor string

@@ -1,4 +1,4 @@
-package main
+package cmd
 
 import (
 	"github.com/didip/tollbooth/v7"
