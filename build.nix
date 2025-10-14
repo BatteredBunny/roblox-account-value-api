@@ -3,7 +3,7 @@ buildGoModule rec {
   src = ./.;
 
   name = "roblox-account-value-api";
-  vendorHash = "sha256-w4m9TcylOc9AmGvJZ13jzvT4fvvwPPJ1gn6rT6cZMvw=";
+  vendorHash = "sha256-s6f0NHvOvfYTWlhbNvR88j6BtOOQMBxrYivsE0cdSpQ=";
 
   ldflags = [
     "-s"

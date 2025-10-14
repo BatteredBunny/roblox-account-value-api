@@ -25,6 +25,7 @@ func setupLogging() *Logger {
 		logWarning: log.New(os.Stdout, "WARN: ", flags),
 	}
 }
+
 func initializeConfig(l *Logger) (c Config) {
 	var configLocation string
 	flag.StringVar(&configLocation, "c", "config.toml", "Location of config file")
