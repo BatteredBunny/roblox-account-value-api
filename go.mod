@@ -3,7 +3,7 @@ module github.com/BatteredBunny/roblox-account-value-api
 go 1.25.1
 
 require (
-	github.com/BurntSushi/toml v1.5.0
+	github.com/BurntSushi/toml v1.6.0
 	github.com/didip/tollbooth/v8 v8.0.1
 	github.com/gin-gonic/gin v1.11.0
 	github.com/google/wire v0.7.0
