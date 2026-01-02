@@ -1,7 +1,8 @@
-{ pkgs
-, config ? pkgs.config
-, lib ? pkgs.lib
-, ...
+{
+  pkgs,
+  config ? pkgs.config,
+  lib ? pkgs.lib,
+  ...
 }:
 let
   cfg = config.services.roblox-account-value-api;
@@ -18,6 +19,12 @@ in
       default = pkgs.callPackage ./build.nix { };
     };
 
+    openFirewall = lib.mkOption {
+      type = lib.types.bool;
+      default = false;
+      description = "Whether to open the firewall for the Roblox Account Value API port.";
+    };
+
     settings = {
       port = lib.mkOption {
         type = lib.types.int;
@@ -25,7 +32,11 @@ in
         description = "port to run http api on";
       };
 
-      behindReverseProxy = lib.mkEnableOption "Enable if setting up the service behind a reverse proxy" // { default = false; };
+      behindReverseProxy =
+        lib.mkEnableOption "Enable if setting up the service behind a reverse proxy"
+        // {
+          default = false;
+        };
 
       robux_per_euro = lib.mkOption {
         type = lib.types.int;
@@ -36,6 +47,10 @@ in
   };
 
   config = lib.mkIf cfg.enable {
+    networking.firewall.allowedTCPPorts = lib.mkIf cfg.openFirewall [
+      (lib.strings.toIntBase10 cfg.settings.port) # TODO: kinda dumb refactor me and above settings to toml part
+    ];
+
     systemd.services.roblox-account-value-api = {
       enable = true;
       serviceConfig = {

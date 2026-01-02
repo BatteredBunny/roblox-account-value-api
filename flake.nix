@@ -4,9 +4,10 @@
   };
 
   outputs =
-    { self
-    , nixpkgs
-    , ...
+    {
+      self,
+      nixpkgs,
+      ...
     }:
     let
       inherit (nixpkgs) lib;
@@ -15,9 +16,12 @@
 
       forAllSystems = lib.genAttrs systems;
 
-      nixpkgsFor = forAllSystems (system: import nixpkgs {
-        inherit system;
-      });
+      nixpkgsFor = forAllSystems (
+        system:
+        import nixpkgs {
+          inherit system;
+        }
+      );
     in
     {
       overlays.default = final: prev: {
@@ -26,7 +30,8 @@
 
       nixosModules.default = import ./module.nix;
 
-      devShells = forAllSystems (system:
+      devShells = forAllSystems (
+        system:
         let
           pkgs = nixpkgsFor.${system};
         in
@@ -38,15 +43,34 @@
               go
             ];
           };
-        });
+        }
+      );
 
-      packages = forAllSystems (system:
+      packages = forAllSystems (
+        system:
         let
           pkgs = nixpkgsFor.${system};
         in
         rec {
           roblox-account-value-api = default;
           default = pkgs.callPackage ./build.nix { };
+
+          # nix run .#test-service.driverInteractive
+          test-service = pkgs.callPackage ./test.nix {
+            inherit self;
+          };
+        }
+      );
+
+      checks = forAllSystems (
+        system:
+        let
+          pkgs = nixpkgsFor.${system};
+        in
+        {
+          test-service = pkgs.callPackage ./test.nix {
+            inherit self;
+          };
         }
       );
     };
