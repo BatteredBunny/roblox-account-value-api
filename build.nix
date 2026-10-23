@@ -1,5 +1,5 @@
-{ buildGoModule }:
-buildGoModule rec {
+{ buildGoLatestModule }:
+buildGoLatestModule {
   src = ./.;
 
   name = "roblox-account-value-api";
@@ -13,6 +13,6 @@ buildGoModule rec {
   meta = {
     homepage = "https://github.com/BatteredBunny/roblox-account-value-api";
     description = "Webapp that calculates account value in robux and euro";
-    mainProgram = name;
+    mainProgram = "roblox-account-value-api";
   };
 }

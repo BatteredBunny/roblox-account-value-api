@@ -1,6 +1,6 @@
 {
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs.url = "https://channels.nixos.org/nixos-unstable/nixexprs.tar.zst";
   };
 
   outputs =
@@ -25,7 +25,7 @@
     in
     {
       overlays.default = final: prev: {
-        roblox-account-value-api = self.packages.${final.stdenv.system}.roblox-account-value-api;
+        roblox-account-value-api = final.callPackage ./build.nix { };
       };
 
       nixosModules.default = import ./module.nix;
@@ -38,9 +38,8 @@
         {
           default = pkgs.mkShell {
             buildInputs = with pkgs; [
-              gnumake
               wire
-              go
+              go_latest
             ];
           };
         }
@@ -50,15 +49,11 @@
         system:
         let
           pkgs = nixpkgsFor.${system};
+          overlay = lib.makeScope pkgs.newScope (final: self.overlays.default final pkgs);
         in
-        rec {
-          roblox-account-value-api = default;
-          default = pkgs.callPackage ./build.nix { };
-
-          # nix run .#test-service.driverInteractive
-          test-service = pkgs.callPackage ./test.nix {
-            inherit self;
-          };
+        {
+          inherit (overlay) roblox-account-value-api;
+          default = overlay.roblox-account-value-api;
         }
       );
 
